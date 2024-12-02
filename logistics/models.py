@@ -1,15 +1,5 @@
-from django.contrib.auth.models import AbstractUser
+
 from django.db import models
-
-class CustomUser(AbstractUser):
-    ROLE_CHOICES = [
-        ('LOGIST', 'Логіст'),
-        ('ADMIN', 'Адміністратор'),
-        ('OWNER', 'Власник'),
-        ('DEPUTY', 'Заступник'),
-    ]
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='LOGIST')
-
 
 class Driver(models.Model):
     name = models.CharField(max_length=100)
