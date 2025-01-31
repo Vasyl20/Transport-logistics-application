@@ -1,0 +1,3 @@
+# Ігноруємо всі файли в env крім requirements.txt (або Pipfile)
+env/
+!env/requirements.txt
