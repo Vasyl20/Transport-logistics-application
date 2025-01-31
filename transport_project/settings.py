@@ -29,8 +29,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
+
+
+#дозвіл на використання тільки певним ip-адресам
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'logistics',
     'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
 ]
 
 
@@ -52,6 +62,8 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
