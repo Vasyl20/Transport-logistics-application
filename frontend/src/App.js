@@ -1,13 +1,8 @@
 import React from "react";
-import Login from "./Login";
+import AppRoutes from "../src/components/routes/AppRoutes";
 
 function App() {
-  return (
-    <div>
-      <h1>React + JWT + Django</h1>
-      <Login />
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;
