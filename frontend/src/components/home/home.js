@@ -30,6 +30,7 @@ const Dashboard = () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
     })
     .then((response) => {
+      console.log("Отримані водії: ", response.data); // Лог для перевірки
       setDrivers(response.data);
       setLoading(false);
     })
@@ -90,6 +91,7 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
       })
       .then((response) => {
+        console.log("Отримані дані водія для перегляду: ", response.data); // Лог для перевірки
         setSelectedDriver(response.data);
       })
       .catch((error) => {
@@ -113,15 +115,18 @@ const Dashboard = () => {
         <button onClick={() => setFormVisibility({ ...formVisibility, add: true })}>Додати водія</button>
 
         {formVisibility.add && <DriverForm onSubmit={handleAddItem} onClose={() => setFormVisibility({ ...formVisibility, add: false })} />}
-        {formVisibility.edit && (
+        {formVisibility.edit && selectedDriver && (
           <EditDriverForm
-            driverId={selectedDriverId}
+            driver={selectedDriver} // Передаємо дані водія
             onEdit={handleEditItem}
             onClose={() => setFormVisibility({ ...formVisibility, edit: false })}
           />
         )}
         {formVisibility.view && selectedDriver && (
-          <ViewDriverForm driver={selectedDriver} onClose={() => setFormVisibility({ ...formVisibility, view: false })} />
+          <ViewDriverForm
+            driver={selectedDriver} // Передаємо дані для перегляду
+            onClose={() => setFormVisibility({ ...formVisibility, view: false })}
+          />
         )}
 
         <table>
