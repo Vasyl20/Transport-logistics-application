@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './VehicleForm.css';
+import './vehicleForm.css';
 
 const VehicleForm = ({ onSubmit, initialData = {} }) => {
   const [formData, setFormData] = useState({

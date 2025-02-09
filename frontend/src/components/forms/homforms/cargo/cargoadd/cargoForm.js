@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './CargoForm.css';
+import './cargoForm.css';
 
 const CargoForm = ({ onSubmit, initialData = {} }) => {
   const [formData, setFormData] = useState({

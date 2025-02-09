@@ -16,5 +16,5 @@ router.register(r'geolocation', VehicleGeolocationViewSet, basename='vehiclegeol
 router.register(r'payments', PaymentViewSet, basename='payment')
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]
