@@ -6,6 +6,8 @@ import DriverForm from '../forms/homforms/driver/driveradd/driverForm';
 import EditDriverForm from '../forms/homforms/driver/formdriveredit/formdriveredit.js';
 import ViewDriverForm from '../forms/homforms/driver/driver_view_form/driver_view_form.js';
 
+import Tables from '../forms/homforms/forms_table/tables.js';
+
 Modal.setAppElement("#root");
 
 const Dashboard = () => {
@@ -180,7 +182,16 @@ const Dashboard = () => {
                     </tbody>
                 </table>
             </div>
+
+
+            <div>
+              <h1>Система управління</h1>
+              <Tables />
+            </div>
         </div>
+        
+
+        
     );
 };
 
