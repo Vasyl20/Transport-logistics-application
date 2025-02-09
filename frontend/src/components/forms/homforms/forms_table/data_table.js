@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ViewEntityForm from './view_entity_form';
 
 const DataTable = ({ apiUrl, columns }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedEntity, setSelectedEntity] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         axios.get(apiUrl)
@@ -19,31 +22,46 @@ const DataTable = ({ apiUrl, columns }) => {
             });
     }, [apiUrl]);
 
+    const handleViewEntity = (entity) => {
+        setSelectedEntity(entity);
+        setIsModalOpen(true);
+    };
+
     if (loading) return <div>Завантаження...</div>;
     if (error) return <div>{error}</div>;
 
     return (
-        <table border="1">
-            <thead>
-                <tr>
-                    {columns.map(column => (
-                        <th key={column}>{column}</th>
-                    ))}
-                        <th>Дії</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((row, index) => (
-                    <tr key={index}>
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
                         {columns.map(column => (
-                            <td key={column}>{row[column] || "—"}</td>
+                            <th key={column}>{column}</th>
                         ))}
-                        <td></td>
+                        <th>Дії</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {data.map((row, index) => (
+                        <tr key={index}>
+                            {columns.map(column => (
+                                <td key={column}>{row[column] || "—"}</td>
+                            ))}
+                            <td>
+                                <button onClick={() => handleViewEntity(row)}>Переглянути</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            {isModalOpen && selectedEntity && (
+                <ViewEntityForm 
+                    entity={selectedEntity} 
+                    onClose={() => setIsModalOpen(false)} 
+                />
+            )}
+        </div>
     );
 };
 
