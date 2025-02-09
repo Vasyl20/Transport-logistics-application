@@ -1,15 +1,15 @@
-import React from 'react';
-// import './view_entity_form.css';
+import React from "react";
+// import "./form.css";
 
-const ViewEntityForm = ({ entity, onClose }) => {
+const ViewForm = ({ item, onClose }) => {
     return (
         <div className="modal-container">
             <div className="form-content">
-                <h2>Детальна інформація</h2>
-                {Object.keys(entity).map((key) => (
+                <h2>Перегляд даних</h2>
+                {Object.keys(item).map((key) => (
                     <div key={key}>
-                        <label>{key.replace('_', ' ')}:</label>
-                        <span>{entity[key] || "—"}</span>
+                        <label>{key}: </label>
+                        <span>{item[key] || "—"}</span>
                     </div>
                 ))}
                 <button onClick={onClose}>Закрити</button>
@@ -18,4 +18,4 @@ const ViewEntityForm = ({ entity, onClose }) => {
     );
 };
 
-export default ViewEntityForm;
+export default ViewForm;

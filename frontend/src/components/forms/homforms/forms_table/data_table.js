@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import ViewEntityForm from './view_entity_form';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import ViewForm from "./view_entity_form"; // Форма перегляду
+import EditForm from "./edit_form"; // Форма редагування
+
 
 const DataTable = ({ apiUrl, columns }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedEntity, setSelectedEntity] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [formVisibility, setFormVisibility] = useState({ view: false, edit: false });
 
     useEffect(() => {
         axios.get(apiUrl)
@@ -22,9 +24,19 @@ const DataTable = ({ apiUrl, columns }) => {
             });
     }, [apiUrl]);
 
-    const handleViewEntity = (entity) => {
-        setSelectedEntity(entity);
-        setIsModalOpen(true);
+    const handleView = (item) => {
+        setSelectedItem(item);
+        setFormVisibility({ view: true, edit: false });
+    };
+
+    const handleEdit = (item) => {
+        setSelectedItem(item);
+        setFormVisibility({ view: false, edit: true });
+    };
+
+    const handleUpdate = (updatedItem) => {
+        setData(data.map(item => (item.id === updatedItem.id ? updatedItem : item)));
+        setFormVisibility({ ...formVisibility, edit: false });
     };
 
     if (loading) return <div>Завантаження...</div>;
@@ -48,17 +60,27 @@ const DataTable = ({ apiUrl, columns }) => {
                                 <td key={column}>{row[column] || "—"}</td>
                             ))}
                             <td>
-                                <button onClick={() => handleViewEntity(row)}>Переглянути</button>
+                                <button onClick={() => handleView(row)}>Переглянути</button>
+                                <button onClick={() => handleEdit(row)}>Редагувати</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-            {isModalOpen && selectedEntity && (
-                <ViewEntityForm 
-                    entity={selectedEntity} 
-                    onClose={() => setIsModalOpen(false)} 
+            {formVisibility.view && selectedItem && (
+                <ViewForm
+                    item={selectedItem}
+                    onClose={() => setFormVisibility({ ...formVisibility, view: false })}
+                />
+            )}
+
+            {formVisibility.edit && selectedItem && (
+                <EditForm
+                    item={selectedItem}
+                    apiUrl={apiUrl}
+                    onClose={() => setFormVisibility({ ...formVisibility, edit: false })}
+                    onUpdate={handleUpdate}
                 />
             )}
         </div>
