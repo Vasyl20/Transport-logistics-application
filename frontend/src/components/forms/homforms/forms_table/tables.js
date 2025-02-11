@@ -7,7 +7,7 @@ const Tables = () => {
             <h2>Водії</h2>
             <DataTable 
                 apiUrl="http://127.0.0.1:8000/api/drivers/" 
-                columns={["id", "first_name", "last_name", "phone_number", "address"]} 
+                columns={["id", "first_name", "last_name", "middle_name", "phone_number", "address"]} 
             />
 
             <h2>Транспорт</h2>
